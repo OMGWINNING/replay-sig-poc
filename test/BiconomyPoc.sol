@@ -13,9 +13,9 @@ import {EcdsaOwnershipRegistryModule} from
 
 /**
  * @title TestBiconomyPoc
-Set up: 
-1. 2x Smart Contract Wallet deployed from Biconomy's factory
-2. Biconomy's ECDSAOwnershipModule used here, but can use any module as long as it doesn't add "msg.sender" into the bytes digest in any way
+ * Set up:
+ * 1. 2x Smart Contract Wallet deployed from Biconomy's factory
+ * 2. Biconomy's ECDSAOwnershipModule used here, but can use any module as long as it doesn't add "msg.sender" into the bytes digest in any way
  */
 contract TestBiconomyPoc is Test {
     SmartAccountFactory factory = new SmartAccountFactory(
