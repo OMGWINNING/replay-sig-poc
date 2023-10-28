@@ -9,7 +9,7 @@ import "lib/kernel/src/factory/AdminLessERC1967Factory.sol";
 import "lib/kernel/src/factory/KernelFactory.sol";
 import {IAllowanceTransfer} from "lib/permit2/src/interfaces/IAllowanceTransfer.sol";
 
-contract TestPoc is Test {
+contract TestZerodevPoc is Test {
     ERC20 erc20 = new ERC20("a", "a");
     Permit2 permit2 = new Permit2();
     Kernel accountA;
