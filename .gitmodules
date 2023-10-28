@@ -13,6 +13,9 @@
 [submodule "lib/light-account"]
 	path = lib/light-account
 	url = https://github.com/alchemyplatform/light-account
+[submodule "lib/scw-contracts"]
+	path = lib/scw-contracts
+	url = https://github.com/bcnmy/scw-contracts
 [submodule "lib/kernel"]
 	path = lib/kernel
 	url = https://github.com/zerodevapp/kernel
