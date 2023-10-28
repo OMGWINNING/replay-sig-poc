@@ -4,18 +4,16 @@ pragma solidity ^0.8.13;
 import {Test, console2} from "forge-std/Test.sol";
 import {Permit2} from "lib/permit2/src/Permit2.sol";
 import {ERC20} from "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol";
-import {IEntryPoint} from "lib/account-abstraction/contracts/interfaces/IEntryPoint.sol";
-import {LightAccount} from "lib/light-account/src/LightAccount.sol";
-import {LightAccountFactory} from "lib/light-account/src/LightAccountFactory.sol";
+import {EntryPoint} from "account-abstraction/core/EntryPoint.sol";
+import "lib/kernel/src/factory/AdminLessERC1967Factory.sol";
+import "lib/kernel/src/factory/KernelFactory.sol";
 import {IAllowanceTransfer} from "lib/permit2/src/interfaces/IAllowanceTransfer.sol";
 
-
-contract TestAlchemyPoc is Test {
-    LightAccountFactory factory = new LightAccountFactory(IEntryPoint(address(0)));
+contract TestZerodevPoc is Test {
     ERC20 erc20 = new ERC20("a", "a");
     Permit2 permit2 = new Permit2();
-    LightAccount accountA;
-    LightAccount accountB;
+    Kernel accountA;
+    Kernel accountB;
 
     address owner;
     uint256 privKey;
@@ -35,9 +33,40 @@ contract TestAlchemyPoc is Test {
 
     function setUp() public {
         (owner, privKey) = makeAddrAndKey("1");
+        address factoryOwner;
+        EntryPoint entryPoint = new EntryPoint();
+        (factoryOwner,) = makeAddrAndKey("factoryOwner");
+        
+        Kernel kernelImpl = new Kernel(entryPoint);
+        KernelFactory factory = new KernelFactory(factoryOwner, entryPoint);
+        ECDSAValidator validator = new ECDSAValidator();
+        vm.startPrank(factoryOwner);
+        factory.setImplementation(address(kernelImpl), true);
+        vm.stopPrank();
 
-        accountA = factory.createAccount(owner, 0);
-        accountB = factory.createAccount(owner, 1);
+        accountA = Kernel(
+            payable(
+                address(
+                    factory.createAccount(
+                        address(kernelImpl),
+                        abi.encodeWithSelector(KernelStorage.initialize.selector, validator, abi.encodePacked(owner)),
+                        0
+                    )
+                )
+            )
+        );
+
+        accountB = Kernel(
+            payable(
+                address(
+                    factory.createAccount(
+                        address(kernelImpl),
+                        abi.encodeWithSelector(KernelStorage.initialize.selector, validator, abi.encodePacked(owner)),
+                        1
+                    )
+                )
+            )
+        );
 
         deal(address(erc20), address(accountA), 10 ether);
         deal(address(erc20), address(accountB), 10 ether);
