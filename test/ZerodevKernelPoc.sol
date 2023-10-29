@@ -36,7 +36,7 @@ contract TestZerodevPoc is Test {
         address factoryOwner;
         EntryPoint entryPoint = new EntryPoint();
         (factoryOwner,) = makeAddrAndKey("factoryOwner");
-        
+
         Kernel kernelImpl = new Kernel(entryPoint);
         KernelFactory factory = new KernelFactory(factoryOwner, entryPoint);
         ECDSAValidator validator = new ECDSAValidator();
