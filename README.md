@@ -44,3 +44,4 @@ b. Cowswap, trades are replayable if using the [1271 path](https://github.com/co
 ## Protocols safe from this
 1. Gnosis safe
 2. ERC2612 permit - contains `address owner` in signed digest
+3. Aave - uses [isValidSig](https://github.com/aave/Aave-Vault/blob/028d7696b323ae582dc7c43d3678789080a3ba92/src/libraries/MetaTxHelpers.sol#L29) for deposit flow, but passes in origin address into the msg digest
