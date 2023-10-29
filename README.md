@@ -38,7 +38,7 @@ If you run into compile errors from building, it's because LightAccount uses sol
 11. [Fuse Wallet](https://github.com/fuseio/fuse-wallet-contracts) (fork of argent)
 
 ## Scope, Applications:
-a. Permit2, token transfers are replayable. Bounded by token approvals + permit time ranges on initial permit from SCA. (PoC included)
+a. Permit2, token transfers are replayable. Bounded by token approvals + permit time ranges on initial permit from SCA. (PoC included)  
 b. Cowswap, trades are replayable if using the [1271 path](https://github.com/cowprotocol/contracts/blob/251bce00ef410602bd0ee2c1e3cd3402abd28c4e/src/contracts/mixins/GPv2Signing.sol#L281-L303). But the signature covers [token swap output address, and time validity](https://github.com/cowprotocol/contracts/blob/251bce00ef410602bd0ee2c1e3cd3402abd28c4e/src/contracts/libraries/GPv2Order.sol#L11-L24) so impact should be low.
 
 ## Protocols safe from this
