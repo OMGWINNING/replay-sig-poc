@@ -2,11 +2,11 @@
 
 ## Overview 
 
-1. Most SCA's implement isValidSig as just a [wrapper over ECDSA.recover](https://github.com/OMGWINNING/replay-sig-poc/blob/master/test/GenericPoc.t.sol#L10-L21)
+1. Most SCA's implement isValidSig as just a [wrapper over ECDSA.recover](https://github.com/OMGWINNING/replay-sig-poc/blob/master/test/GenericPoc.sol#L10-L21)
 
 2. Permit2's 1271 signature implementation does not fully account for the SCA case:  
 a. They use 1271 signatures if claimedSigner (the SCA) has code > 0: https://github.com/Uniswap/permit2/blob/main/src/libraries/SignatureVerification.sol#L26C13-L26C26  
-b. In the 712 struct they use, they do not include the origin address for the tokens. [See example of how struct is built](https://github.com/OMGWINNING/replay-sig-poc/blob/master/test/GenericPoc.t.sol#L53-L73)  
+b. In the 712 struct they use, they do not include the origin address for the tokens. [See example of how struct is built](https://github.com/OMGWINNING/replay-sig-poc/blob/master/test/GenericPoc.sol#L53-L73)  
 c. They invalidate nonces based on `msg.sender` which are SCAs  
 d. Result: If an owner owns multiple SCAs, the permit signature could be replayable across all his accounts  
 
