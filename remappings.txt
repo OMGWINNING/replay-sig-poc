@@ -1,3 +1,4 @@
 @openzeppelin/=lib/openzeppelin-contracts/
 @account-abstraction/=lib/account-abstraction/
 solady/=lib/kernel/lib/solady/src/
+AccountAbstraction/=lib/AccountAbstraction/contracts/
